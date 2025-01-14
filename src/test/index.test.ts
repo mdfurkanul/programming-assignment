@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { commandsValidation, rotationLeftRight } from "..";
+import { commandsValidation, rotationLeftRight, moveForward } from "..";
 
 describe("commandsValidation", () => {
   it("shoud return true for the inputs LFFRRLL", () => {
@@ -35,5 +35,29 @@ describe("rotationLeftRight", () => {
     expect(() => rotationLeftRight("F", "S")).toThrow(
       "Invalid command. Only R/L are valid"
     );
+  });
+});
+
+describe("moveForward", () => {
+  it("should return error", () => {
+    expect(() =>
+      moveForward({ wide: 1, deep: 2, orientation: "W", roomSize: [1, 1] })
+    ).toThrow("Robot out of boundary");
+  });
+
+  it("should return return 1,1", () => {
+    expect(
+      moveForward({ wide: 1, deep: 2, orientation: "N", roomSize: [5, 5] })
+    ).toStrictEqual([1, 1]);
+  });
+  it("should return return 2,2", () => {
+    expect(
+      moveForward({ wide: 1, deep: 2, orientation: "E", roomSize: [5, 5] })
+    ).toStrictEqual([2, 2]);
+  });
+  it("should return return 2,2", () => {
+    expect(
+      moveForward({ wide: 2, deep: 2, orientation: "W", roomSize: [5, 5] })
+    ).toStrictEqual([1, 2]);
   });
 });

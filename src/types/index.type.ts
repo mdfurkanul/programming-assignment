@@ -3,9 +3,9 @@ type orientationType = "N" | "E" | "S" | "W";
 type commandType = "R" | "L" | "F";
 
 type commandsType = string;
-
+type roomSizeType = [number, number];
 type TestInputType = {
-  roomSize: [number, number];
+  roomSize: roomSizeType;
   positionWithOrientation: [number, number, orientationType];
   commands: commandsType;
 };
@@ -20,6 +20,7 @@ export {
   orientationType,
   commandType,
   commandsType,
+  roomSizeType,
   TestInputType,
   positionWithOrientationType,
 };
