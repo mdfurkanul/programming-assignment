@@ -1,13 +1,13 @@
 type orientation = "N" | "E" | "S" | "W";
 
-type command = "R" | "L" | "F";
+type commandType = "R" | "L" | "F";
 
-type commands = string;
+type commandsType = string;
 
-interface TestInput {
+interface TestInputType {
   roomSize: [number, number];
   positionWithOrientation: [number, number, orientation];
-  commands: commands;
+  commands: commandsType;
 }
 
 interface positionWithOrientationType {
@@ -18,8 +18,8 @@ interface positionWithOrientationType {
 
 export {
   orientation,
-  command,
-  commands,
-  TestInput,
+  commandType,
+  commandsType,
+  TestInputType,
   positionWithOrientationType,
 };
