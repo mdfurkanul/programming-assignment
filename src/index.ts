@@ -11,12 +11,6 @@ import { error } from "console";
 
 /* Asign the nacecsary variables */
 
-const robotPositionWithOrientation: positionWithOrientationType = {
-  wide: 0,
-  deep: 0,
-  orientation: "N",
-};
-
 /* Check if the commands contains invalid command */
 function commandsValidation(commands: commandsType): boolean {
   const pattern: RegExp = /^[LFR]+$/;
@@ -82,7 +76,37 @@ function moveForward(
 }
 
 (() => {
-  testCases.forEach((testCase) => {});
+  testCases.forEach((testCase) => {
+    let { roomSize, positionWithOrientation, commands } = testCase;
+    try {
+      const robotPositionWithOrientation: positionWithOrientationType = {
+        wide: positionWithOrientation[0],
+        deep: positionWithOrientation[1],
+        orientation: positionWithOrientation[2],
+      };
+      if (!commandsValidation(commands)) {
+        throw new Error("Invalid commands");
+      }
+      for (let command of commands.toLocaleUpperCase()) {
+        if (command === "R" || command === "L") {
+          robotPositionWithOrientation.orientation = rotationLeftRight(
+            command,
+            positionWithOrientation[2]
+          );
+        } else {
+          let [x, y] = moveForward({
+            ...robotPositionWithOrientation,
+            roomSize: roomSize,
+          });
+          robotPositionWithOrientation.wide = x;
+          robotPositionWithOrientation.deep = y;
+        }
+      }
+      console.log(
+        `Robot Currernt Location is: ${robotPositionWithOrientation.wide} ${robotPositionWithOrientation.deep} ${robotPositionWithOrientation.orientation}`
+      );
+    } catch (error) {}
+  });
 })();
 
 export { commandsValidation, rotationLeftRight, moveForward };
