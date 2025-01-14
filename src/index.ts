@@ -17,7 +17,8 @@ const robotPositionWithOrientation: positionWithOrientationType = {
 
 /* Check if the commands contains invalid command */
 function commandsValidation(commands: commandsType) {
-  return;
+  const pattern: RegExp = /^[LFR]+$/;
+  return pattern.test(commands);
 }
 /* By given command L or R, change the robot orientation */
 function rotationLeftRight(command: commandType, orientation: orientationType) {
@@ -30,3 +31,5 @@ function moveForward(command: commandType) {}
 (() => {
   testCases.forEach((testCase) => {});
 })();
+
+export { commandsValidation };
