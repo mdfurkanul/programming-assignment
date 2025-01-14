@@ -65,45 +65,53 @@ function moveForward(
   }
   if (
     current_position_x < 0 ||
-    current_position_x > roomSize[0] ||
+    current_position_x > roomSize[0] - 1 ||
     current_position_y < 0 ||
-    current_position_y > roomSize[1]
+    current_position_y > roomSize[1] - 1
   ) {
     throw new Error("Robot out of boundary");
   }
   return [current_position_x, current_position_y];
 }
 
-(() => {
-  testCases.forEach((testCase: TestInputType, index: number) => {
-    let { roomSize, positionWithOrientation, commands } = testCase;
-    try {
-      const robotPositionWithOrientation: positionWithOrientationType = {
-        wide: positionWithOrientation[0],
-        deep: positionWithOrientation[1],
-        orientation: positionWithOrientation[2],
-      };
-      if (!commandsValidation(commands)) {
-        throw new Error("Invalid commands");
-      }
-      for (let command of commands.toLocaleUpperCase()) {
-        if (command === "R" || command === "L") {
-          robotPositionWithOrientation.orientation = rotationLeftRight(
-            command,
-            robotPositionWithOrientation.orientation
-          );
-        } else {
-          let [x, y] = moveForward({
-            ...robotPositionWithOrientation,
-            roomSize: roomSize,
-          });
-          robotPositionWithOrientation.wide = x;
-          robotPositionWithOrientation.deep = y;
-        }
-      }
-      console.log(
-        `Robot Currernt Location is: ${robotPositionWithOrientation.wide} ${robotPositionWithOrientation.deep} ${robotPositionWithOrientation.orientation}`
+function commandExecute(testCase: TestInputType): positionWithOrientationType {
+  let { roomSize, positionWithOrientation, commands } = testCase;
+  const robotPositionWithOrientation: positionWithOrientationType = {
+    wide: positionWithOrientation[0],
+    deep: positionWithOrientation[1],
+    orientation: positionWithOrientation[2],
+  };
+  if (!commandsValidation(commands)) {
+    throw new Error("Invalid commands");
+  }
+  for (let command of commands.toLocaleUpperCase()) {
+    if (command === "R" || command === "L") {
+      robotPositionWithOrientation.orientation = rotationLeftRight(
+        command,
+        robotPositionWithOrientation.orientation
       );
+    } else {
+      let [x, y] = moveForward({
+        ...robotPositionWithOrientation,
+        roomSize: roomSize,
+      });
+      robotPositionWithOrientation.wide = x;
+      robotPositionWithOrientation.deep = y;
+    }
+  }
+  return robotPositionWithOrientation;
+}
+
+(() => {
+  testCases.forEach((testCase: TestInputType) => {
+    try {
+      let { wide, deep, orientation } = commandExecute(testCase);
+      console.log(`${testCase.roomSize[0]} ${testCase.roomSize[1]}`);
+      console.log(
+        `${testCase.positionWithOrientation[0]} ${testCase.positionWithOrientation[1]} ${testCase.positionWithOrientation[2]}`
+      );
+      console.log(testCase.commands);
+      console.log(`Report: ${wide} ${deep} ${orientation}`);
     } catch (error) {
       console.log("Error log:", error);
     }
