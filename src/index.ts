@@ -7,7 +7,6 @@ import {
   positionWithOrientationType,
 } from "./types/index.type";
 import testCases from "./input/input_test";
-import { error } from "console";
 
 /* Asign the nacecsary variables */
 
@@ -65,9 +64,9 @@ function moveForward(
       break;
   }
   if (
-    current_position_x < 1 ||
+    current_position_x < 0 ||
     current_position_x > roomSize[0] ||
-    current_position_y < 1 ||
+    current_position_y < 0 ||
     current_position_y > roomSize[1]
   ) {
     throw new Error("Robot out of boundary");
@@ -76,7 +75,7 @@ function moveForward(
 }
 
 (() => {
-  testCases.forEach((testCase) => {
+  testCases.forEach((testCase: TestInputType, index: number) => {
     let { roomSize, positionWithOrientation, commands } = testCase;
     try {
       const robotPositionWithOrientation: positionWithOrientationType = {
@@ -91,7 +90,7 @@ function moveForward(
         if (command === "R" || command === "L") {
           robotPositionWithOrientation.orientation = rotationLeftRight(
             command,
-            positionWithOrientation[2]
+            robotPositionWithOrientation.orientation
           );
         } else {
           let [x, y] = moveForward({
@@ -105,7 +104,9 @@ function moveForward(
       console.log(
         `Robot Currernt Location is: ${robotPositionWithOrientation.wide} ${robotPositionWithOrientation.deep} ${robotPositionWithOrientation.orientation}`
       );
-    } catch (error) {}
+    } catch (error) {
+      console.log("Error log:", error);
+    }
   });
 })();
 

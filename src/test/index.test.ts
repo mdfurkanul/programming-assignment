@@ -18,6 +18,10 @@ describe("commandsValidation", () => {
 });
 
 describe("rotationLeftRight", () => {
+  it("shoud return S for the inputs are R, E", () => {
+    expect(rotationLeftRight("R", "E")).toBe("S");
+  });
+
   it("shoud return W for the inputs are R, S", () => {
     expect(rotationLeftRight("R", "S")).toBe("W");
   });
