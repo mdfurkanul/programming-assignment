@@ -74,6 +74,7 @@ function moveForward(
   return [current_position_x, current_position_y];
 }
 
+/* Execute the full commands  */
 function commandExecute(testCase: TestInputType): positionWithOrientationType {
   let { roomSize, positionWithOrientation, commands } = testCase;
   const robotPositionWithOrientation: positionWithOrientationType = {
@@ -81,7 +82,7 @@ function commandExecute(testCase: TestInputType): positionWithOrientationType {
     deep: positionWithOrientation[1],
     orientation: positionWithOrientation[2],
   };
-  if (!commandsValidation(commands)) {
+  if (!commandsValidation(commands.toLocaleUpperCase())) {
     throw new Error("Invalid commands");
   }
   for (let command of commands.toLocaleUpperCase()) {
@@ -118,4 +119,4 @@ function commandExecute(testCase: TestInputType): positionWithOrientationType {
   });
 })();
 
-export { commandsValidation, rotationLeftRight, moveForward };
+export { commandsValidation, rotationLeftRight, moveForward, commandExecute };

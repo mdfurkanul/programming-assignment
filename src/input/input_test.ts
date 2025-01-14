@@ -11,5 +11,10 @@ const testCases: TestInputType[] = [
     positionWithOrientation: [0, 0, "E"],
     commands: "RFLFFLRF",
   },
+  {
+    roomSize: [7, 5],
+    positionWithOrientation: [0, 0, "E"],
+    commands: "rFLFFLRFrfffLf",
+  },
 ];
 export default testCases;
