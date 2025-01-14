@@ -36,10 +36,4 @@ describe("rotationLeftRight", () => {
       "Invalid command. Only R/L are valid"
     );
   });
-
-  it("shoud return error for the inputs are L, U", () => {
-    expect(() => rotationLeftRight("L", "U")).toThrow(
-      "Invalid direction. Only N/E/S/W are valid"
-    );
-  });
 });

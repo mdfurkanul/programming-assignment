@@ -17,13 +17,16 @@ const robotPositionWithOrientation: positionWithOrientationType = {
 };
 
 /* Check if the commands contains invalid command */
-function commandsValidation(commands: commandsType) {
+function commandsValidation(commands: commandsType): boolean {
   const pattern: RegExp = /^[LFR]+$/;
   return pattern.test(commands);
 }
 /* By given command L or R, change the robot orientation */
-function rotationLeftRight(command: commandType, orientation: orientationType) {
-  const all_direction: string[] = ["N", "E", "S", "W"];
+function rotationLeftRight(
+  command: commandType,
+  orientation: orientationType
+): orientationType {
+  const all_direction: orientationType[] = ["N", "E", "S", "W"];
 
   if (command !== "R" && command !== "L") {
     throw new Error("Invalid command. Only R/L are valid");
